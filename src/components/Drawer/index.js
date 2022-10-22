@@ -1,33 +1,24 @@
 import styles from './Drawer.module.scss';
 
-function Drawer(props) {
+function Drawer({ onClose, items=[] }) {
     return (
         <div className={styles.overlay}>
             <div className={styles.drawer}>
-                <h2 className="mb-30 d-flex justify-between">Your Cart <img onClick={props.onClose} className="removeBtn cu-p"
+                <h2 className="mb-30 d-flex justify-between">Your Cart <img onClick={onClose}
+                                                                            className="removeBtn cu-p"
                                                                             src="/img/btn-remove.svg" alt="close"/>
                 </h2>
                 <div className={styles.items}>
-                    <div className="cartItem d-flex align-center mb-20">
-
-                        <div style={{backgroundImage: "url(/img/sneakers/1.jpg)"}} className="cartItemImg"></div>
-
-                        <div className="mr-20 d-flex flex-column">
-                            <p className="mb-5">Мужские Кроссовки Nike Lebron XVIII Low</p>
-                            <b>130$</b>
+                    {items.map((obj) => (
+                        <div className="cartItem d-flex align-center mb-20">
+                            <div style={{backgroundImage: `url(${obj.imageURL})`}} className="cartItemImg"></div>
+                            <div className="mr-20 d-flex flex-column">
+                                <p className="mb-5">{obj.title}</p>
+                                <b>{obj.price}$</b>
+                            </div>
+                            <img className="removeBtn" src="/img/btn-remove.svg" alt="remove"/>
                         </div>
-                        <img className="removeBtn" src="/img/btn-remove.svg" alt="remove"/>
-                    </div>
-                    <div className="cartItem d-flex align-center mb-20">
-
-                        <div style={{backgroundImage: "url(/img/sneakers/1.jpg)"}} className="cartItemImg"></div>
-
-                        <div className="mr-20 d-flex flex-column">
-                            <p className="mb-5">Мужские Кроссовки Nike Lebron XVIII Low</p>
-                            <b>130$</b>
-                        </div>
-                        <img className="removeBtn" src="/img/btn-remove.svg" alt="remove"/>
-                    </div>
+                    ))}
 
                 </div>
                 <div className="cartTotalBlock mt-40">

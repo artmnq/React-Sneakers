@@ -27,6 +27,16 @@ body {
   border: 1px solid #F3F3F3;
   border-radius: 10px;
   padding: 0 15px;
+  position: relative;
+
+  .clear {
+    position: absolute;
+    right: 3px;
+    height: 24px;
+    width: 24px;
+    top: 10.5px;
+    cursor: pointer;
+  }
 
   input {
     border: 0;
@@ -42,6 +52,7 @@ body {
       display: flex;
       align-items: flex-end;
       margin-bottom: 20px;
+
       div {
         flex: 1;
         height: 1px;
@@ -52,6 +63,7 @@ body {
       }
     }
   }
+
   .greenButton {
     position: relative;
 
@@ -60,6 +72,7 @@ body {
         transform: translateX(5px);
       }
     }
+
     img {
       position: absolute;
       right: 30px;
