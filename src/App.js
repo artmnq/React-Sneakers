@@ -2,11 +2,12 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Axios from "axios";
 import Header from "./components/Header";
-import Drawer from "./components/Drawer";
+import Index from "./components/Drawer";
 import AppContext from "./context";
 
 import Home from "./pages/Home";
 import Favourites from "./pages/Favourites";
+import Orders from "./pages/Orders";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -38,8 +39,6 @@ function App() {
   }, []);
 
   const onAddToCart = (obj) => {
-    console.log(obj);
-
     if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
       Axios.delete(
         `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${obj.id}`
@@ -95,18 +94,18 @@ function App() {
         favourites,
         isItemAdded,
         onAddToFavourite,
+        onAddToCart,
         setCartOpened,
         setCartItems,
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
-          <Drawer
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
-          />
-        )}
+        <Index
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpened}
+        />
 
         <Header onClickCart={() => setCartOpened(true)} />
 
@@ -127,6 +126,7 @@ function App() {
             }
           />
           <Route path="/favourites" element={<Favourites />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </div>
     </AppContext.Provider>
