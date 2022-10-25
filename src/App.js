@@ -19,52 +19,79 @@ function App() {
 
   React.useEffect(() => {
     async function fetchData() {
-      const cartResponse = await Axios.get(
-        "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart"
-      );
-      const favouritesResponse = await Axios.get(
-        "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites"
-      );
-      const itemsResponse = await Axios.get(
-        "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/items"
-      );
+      try {
+        const [cartResponse, favouritesResponse, itemsResponse] =
+          await Promise.all([
+            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart"),
+            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites"),
+            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/items"),
+          ]);
 
-      setIsLoading(false);
-      setCartItems(cartResponse.data);
-      setFavourites(favouritesResponse.data);
-      setItems(itemsResponse.data);
+        setIsLoading(false);
+        setCartItems(cartResponse.data);
+        setFavourites(favouritesResponse.data);
+        setItems(itemsResponse.data);
+      } catch (error) {
+        alert("Data request mistake");
+      }
     }
-
     fetchData();
   }, []);
 
-  const onAddToCart = (obj) => {
-    if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-      Axios.delete(
-        `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${obj.id}`
+  const onAddToCart = async (obj) => {
+    try {
+      const findItem = cartItems.find(
+        (item) => Number(item.parentId) === Number(obj.id)
       );
-      setCartItems((prev) =>
-        prev.filter((item) => Number(item.id) !== Number(obj.id))
-      );
-    } else {
-      Axios.post("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart", obj);
-      setCartItems((prev) => [...prev, obj]);
+      if (findItem) {
+        setCartItems((prev) =>
+          prev.filter((item) => Number(item.parentId) !== Number(obj.id))
+        );
+        await Axios.delete(
+          `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${findItem.id}`
+        );
+      } else {
+        setCartItems((prev) => [...prev, obj]);
+        const { data } = await Axios.post(
+          "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart",
+          obj
+        );
+        setCartItems((prev) =>
+          prev.map((item) => {
+            if (item.parentId === data.parentId) {
+              return {
+                ...item,
+                id: data.id,
+              };
+            }
+            return item;
+          })
+        );
+      }
+    } catch (error) {
+      alert("Error while adding to cart");
     }
   };
 
   const onRemoveItem = (id) => {
-    Axios.delete(`https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    try {
+      Axios.delete(`https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${id}`);
+      setCartItems((prev) =>
+        prev.filter((item) => Number(item.id) !== Number(id))
+      );
+    } catch (error) {
+      alert("Error while delete from cart");
+    }
   };
 
   const onAddToFavourite = async (obj) => {
     try {
       if (favourites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
-        await Axios.delete(
-          `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites/${obj.id}`
-        );
         setFavourites((prev) =>
           prev.filter((item) => Number(item.id) !== Number(obj.id))
+        );
+        Axios.delete(
+          `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites/${obj.id}`
         );
       } else {
         const { data } = await Axios.post(
@@ -74,7 +101,7 @@ function App() {
         setFavourites((prev) => [...prev, data]);
       }
     } catch (error) {
-      alert("Error, please try again");
+      alert("Error, while add to favorites");
     }
   };
 
@@ -83,7 +110,7 @@ function App() {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   };
 
   return (

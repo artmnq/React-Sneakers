@@ -15,7 +15,7 @@ function Home({
     const filteredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLowerCase())
     );
-    return (isLoading ? [...Array(12)] : filteredItems).map((item, index) => (
+    return (isLoading ? [...Array(8)] : filteredItems).map((item, index) => (
       <Card
         key={index}
         onFavourite={(obj) => onAddToFavourite(obj)}
