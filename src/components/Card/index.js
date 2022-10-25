@@ -1,7 +1,7 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 
-import AppContext from "../../context";
+import AppContext from "../../context.js";
 
 import styles from "./Card.module.scss";
 
@@ -66,7 +66,9 @@ function Card({
             <img
               className={styles.plus}
               onClick={onClickPlus}
-              src={isItemAdded(id) ? "/img/btn-checked" : "/img/btn-plus.svg"}
+              src={
+                isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"
+              }
               alt="Add"
             />
           </div>
