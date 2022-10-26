@@ -1,7 +1,7 @@
 import React from "react";
 import Axios from "axios";
 
-import Info from "../info";
+import Info from "../Info";
 import { useCart } from "../../hooks/useCart";
 
 import styles from "./Drawer.module.scss";
@@ -35,7 +35,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
         await delay(1000);
       }
     } catch (error) {
-      alert("Error creating order");
+      alert("Error while creating order");
     }
     setIsLoading(false);
   };
@@ -97,7 +97,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                 onClick={onClickOrder}
                 className="greenButton"
               >
-                Оформить заказ <img src="/img/arrow.svg" alt="Arrow" />
+                Place your order <img src="/img/arrow.svg" alt="Arrow" />
               </button>
             </div>
           </div>

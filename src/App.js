@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Axios from "axios";
 import Header from "./components/Header";
-import Index from "./components/Drawer";
+import Drawer from "./components/Drawer";
 import AppContext from "./context";
 
 import Home from "./pages/Home";
@@ -127,7 +127,7 @@ function App() {
       }}
     >
       <div className="wrapper clear">
-        <Index
+        <Drawer
           items={cartItems}
           onClose={() => setCartOpened(false)}
           onRemove={onRemoveItem}
