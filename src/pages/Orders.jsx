@@ -1,5 +1,5 @@
 import React from "react";
-import Axios from "axios";
+import axios from "axios";
 
 import Card from "../components/Card";
 
@@ -10,7 +10,7 @@ function Orders() {
   React.useEffect(() => {
     (async () => {
       try {
-        const { data } = await Axios.get(
+        const { data } = await axios.get(
           "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/orders"
         );
         setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
