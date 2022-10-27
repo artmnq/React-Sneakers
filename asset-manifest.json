@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/React-Sneakers/static/css/main.2fb827be.css",
+    "main.js": "/React-Sneakers/static/js/main.b20bde3e.js",
+    "index.html": "/React-Sneakers/index.html",
+    "main.2fb827be.css.map": "/React-Sneakers/static/css/main.2fb827be.css.map",
+    "main.b20bde3e.js.map": "/React-Sneakers/static/js/main.b20bde3e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2fb827be.css",
+    "static/js/main.b20bde3e.js"
+  ]
+}
