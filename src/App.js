@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import AppContext from "./context";
@@ -22,9 +22,9 @@ function App() {
       try {
         const [cartResponse, favouritesResponse, itemsResponse] =
           await Promise.all([
-            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart"),
-            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites"),
-            Axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/items"),
+            axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart"),
+            axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites"),
+            axios.get("https://6352ea05d0bca53a8eb7bf0e.mockapi.io/items"),
           ]);
 
         setIsLoading(false);
@@ -47,12 +47,12 @@ function App() {
         setCartItems((prev) =>
           prev.filter((item) => Number(item.parentId) !== Number(obj.id))
         );
-        await Axios.delete(
+        await axios.delete(
           `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${findItem.id}`
         );
       } else {
         setCartItems((prev) => [...prev, obj]);
-        const { data } = await Axios.post(
+        const { data } = await axios.post(
           "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart",
           obj
         );
@@ -75,7 +75,7 @@ function App() {
 
   const onRemoveItem = (id) => {
     try {
-      Axios.delete(`https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${id}`);
+      axios.delete(`https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/${id}`);
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(id))
       );
@@ -90,11 +90,11 @@ function App() {
         setFavourites((prev) =>
           prev.filter((item) => Number(item.id) !== Number(obj.id))
         );
-        Axios.delete(
+        axios.delete(
           `https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites/${obj.id}`
         );
       } else {
-        const { data } = await Axios.post(
+        const { data } = await axios.post(
           "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/favourites",
           obj
         );

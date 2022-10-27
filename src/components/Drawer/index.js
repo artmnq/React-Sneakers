@@ -1,5 +1,5 @@
 import React from "react";
-import Axios from "axios";
+import axios from "axios";
 
 import Info from "../Info";
 import { useCart } from "../../hooks/useCart";
@@ -17,7 +17,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
-      const { data } = await Axios.post(
+      const { data } = await axios.post(
         "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/orders",
         {
           items: cartItems,
@@ -29,7 +29,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
 
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
-        await Axios.delete(
+        await axios.delete(
           "https://6352ea05d0bca53a8eb7bf0e.mockapi.io/cart/" + item.id
         );
         await delay(1000);
