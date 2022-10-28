@@ -73,7 +73,7 @@ function Card({
                 src={
                   isItemAdded(id) ? "img/btn-checked.svg" : "img/btn-plus.svg"
                 }
-                alt="Plus"
+                alt="add"
               />
             )}
           </div>

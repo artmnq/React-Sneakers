@@ -87,7 +87,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                   <b>{totalPrice} $ </b>
                 </li>
                 <li>
-                  <span>Налог 5%:</span>
+                  <span>Tax 5%: </span>
                   <div></div>
                   <b>{totalPrice * 0.05} $ </b>
                 </li>
